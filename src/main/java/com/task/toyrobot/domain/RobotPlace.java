@@ -1,4 +1,4 @@
-package com.task.toyrobot.Domain;
+package com.task.toyrobot.domain;
 
 import com.task.toyrobot.service.StateService;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -64,8 +64,8 @@ public class RobotPlace {
   @JsonIgnore
   public boolean isValidPlace() {
 
-    if ((ORIGIN <= x) && (x <= StateService.X_LENGTH)) {
-      if ((ORIGIN <= y) && (y <= StateService.Y_LEGNTH)) {
+    if ((ORIGIN <= x) && (x < StateService.X_LENGTH)) {
+      if ((ORIGIN <= y) && (y < StateService.Y_LEGNTH)) {
         if ((direction.getValue() == 0) || (direction.getValue() == 1) || (direction.getValue()
             == 2) || (direction.getValue() == 3)) {
           return true;

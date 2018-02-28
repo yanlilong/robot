@@ -1,4 +1,4 @@
-package com.task.toyrobot.Domain;
+package com.task.toyrobot.domain;
 
 /**
  * Defines the directions EAST, NORTH, SOUTH and WEST that the Robot could face
