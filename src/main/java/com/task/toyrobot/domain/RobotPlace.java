@@ -9,11 +9,6 @@ import org.apache.log4j.Logger;
  */
 
 public class RobotPlace {
-
-  private static final Logger logger = Logger.getLogger(RobotPlace.class);
-
-  public static final int ORIGIN = 0;
-
   private int x;
   private int y;
   private Direction direction;
@@ -59,27 +54,17 @@ public class RobotPlace {
   }
 
   /**
+   * Check if this RobotPlace is valid or not
+   *
    * @return true if a place of Robot is valid; false otherwise
    */
   @JsonIgnore
-  public boolean isValidPlace() {
-
-    if ((ORIGIN <= x) && (x < StateService.X_LENGTH)) {
-      if ((ORIGIN <= y) && (y < StateService.Y_LEGNTH)) {
-        if ((direction.getValue() == 0) || (direction.getValue() == 1) || (direction.getValue()
-            == 2) || (direction.getValue() == 3)) {
-          return true;
-        } else {
-          return false;
-        }
-      } else {
-        return false;
-      }
-
-    } else {
-      return false;
+  public boolean isValid() {
+    if (x >= 0 && x < StateService.X_LENGTH
+        && y >= 0 && y < StateService.Y_LEGNTH) {
+      return true;
     }
-
+    return false;
   }
 
   @Override

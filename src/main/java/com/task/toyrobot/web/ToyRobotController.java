@@ -1,12 +1,11 @@
 package com.task.toyrobot.web;
 
-
-import com.task.toyrobot.Exception.ActionException;
-import com.task.toyrobot.Exception.PlaceException;
+import com.task.toyrobot.exception.ActionException;
+import com.task.toyrobot.exception.PlaceException;
 import com.task.toyrobot.service.ParseService;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
+import com.google.common.base.Strings;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -17,6 +16,9 @@ import com.task.toyrobot.service.Robot;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+/**
+ * Controller for a Toy Robot
+ */
 @Controller
 public class ToyRobotController {
 
@@ -29,16 +31,16 @@ public class ToyRobotController {
       @RequestParam(required=false, name= "ACTIONS", value = "ACTIONS") String commands)
       throws PlaceException, ActionException {
 
-    if (StringUtils.compare(place,"")==0 || StringUtils.compare(place,null)==0) {
+    if (Strings.isNullOrEmpty(place)) {
       throw new PlaceException("Please give the Robot a Place");
     }
 
-    if (StringUtils.compare(commands,"")==0 || StringUtils.compare(commands,null)==0) {
+    if (Strings.isNullOrEmpty(commands)) {
       throw new ActionException("Please give the Robot ACTIONS");
     }
 
     RobotPlace robotPlace = ParseService.parseRobotPlace(place);
-    if (!robotPlace.isValidPlace()) {
+    if (!robotPlace.isValid()) {
       throw new PlaceException("invalid place: " + place);
     }
 
@@ -46,7 +48,6 @@ public class ToyRobotController {
     RobotPlace newState = Robot.run(robotPlace, actions);
     return newState;
   }
-
 
   @ExceptionHandler(PlaceException.class)
   public ResponseEntity<String> placeExceptionHandler(Exception ex) {

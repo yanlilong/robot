@@ -4,8 +4,10 @@ import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
+/**
+ * Test {@link RobotPlace}
+ */
 public class RobotPlaceTest {
   private RobotPlace place;
   @Before
@@ -29,46 +31,45 @@ public class RobotPlaceTest {
   }
 
   @Test
-  public void isValidPlace() throws Exception {
+  public void testRobotPlaces() throws Exception {
     //valid
-    assertEquals(place.isValidPlace(), true);
+    assertTrue(place.isValid());
 
     place = new RobotPlace(2, 3, Direction.NORTH);
 
-    //invalid
-    assertEquals(place.isValidPlace(), true);
+    //valid case
+    assertTrue(place.isValid());
 
+    //invalid cases
     place = new RobotPlace(5, 5, Direction.NORTH);
-    assertEquals(place.isValidPlace(), false);
+    assertFalse(place.isValid());
 
     place = new RobotPlace(0, 5, Direction.NORTH);
-    assertEquals(place.isValidPlace(), false);
+    assertFalse(place.isValid());
 
     place = new RobotPlace(5, 0, Direction.NORTH);
-    assertEquals(place.isValidPlace(), false);
+    assertFalse(place.isValid());
 
     place = new RobotPlace(0, 6, Direction.NORTH);
-    assertEquals(place.isValidPlace(), false);
+    assertFalse(place.isValid());
 
     place = new RobotPlace(-1, 0, Direction.NORTH);
-    assertEquals(place.isValidPlace(), false);
+    assertFalse(place.isValid());
 
     place = new RobotPlace(-1, -1, Direction.NORTH);
-    assertEquals(place.isValidPlace(), false);
+    assertFalse(place.isValid());
 
     place = new RobotPlace(-1, -1, Direction.NORTH);
-    assertEquals(place.isValidPlace(), false);
+    assertFalse(place.isValid());
 
     place = new RobotPlace(6, 0, Direction.NORTH);
-    assertEquals(place.isValidPlace(), false);
+    assertFalse(place.isValid());
 
     place = new RobotPlace(6, 6, Direction.NORTH);
-    assertEquals(place.isValidPlace(), false);
+    assertFalse(place.isValid());
 
     place = new RobotPlace(6, 6, Direction.NORTH);
-    assertEquals(place.isValidPlace(), false);
-
-
+    assertEquals(place.isValid(), false);
   }
 
 }

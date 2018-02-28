@@ -17,7 +17,7 @@ public class StateServiceTest {
     int actual = StateService.getState(0, 0, Direction.EAST);
     assertTrue("Actural state is not correct", expected == actual);
 
-    expected = 36;
+    expected = 25;
     actual = StateService.getState(0, 0, Direction.NORTH);
     assertTrue( "Actural state is not correct", expected == actual);
   }
@@ -25,7 +25,7 @@ public class StateServiceTest {
   @Test
   public void getRobotState() {
     RobotPlace expected = new RobotPlace(1, 0, Direction.NORTH);
-    RobotPlace actual = StateService.getRobotPlace(37);
+    RobotPlace actual = StateService.getRobotPlace(26);
 
     assertTrue("Actual state is not correct", expected.equals(actual));
   }

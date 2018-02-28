@@ -3,8 +3,9 @@ package com.task.toyrobot.service;
 import com.task.toyrobot.domain.Action;
 import com.task.toyrobot.domain.Direction;
 import com.task.toyrobot.domain.RobotPlace;
-import com.task.toyrobot.Exception.PlaceException;
-import com.task.toyrobot.Exception.ActionException;
+import com.task.toyrobot.exception.PlaceException;
+import com.task.toyrobot.exception.ActionException;
+import java.util.Arrays;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
@@ -13,40 +14,42 @@ import org.apache.log4j.Logger;
  */
 
 public class ParseService {
-
-  private static final Logger logger = Logger.getLogger(ParseService.class);
+  private final static String COMMA = ",";
 
   /**
    * parse actions {@link Action[]} from the given {@link String}.
    *
    * @return Actions[]
    */
-  public static Action[] parseActions(String params) throws ActionException {
-    String splitAction = params;
-    splitAction = StringUtils.upperCase(splitAction);
-    if (!StringUtils.contains(splitAction, Action.REPORT.name())) {
-      throw new ActionException(
-          "Please add REPORT in your Parameter ACTIONS: " + splitAction+ " ,in order to get output");
-    }
-    String[] actionParts = StringUtils.split(splitAction, ",");
+  public static Action[] parseActions(final String params) throws ActionException {
+    final String[] parts = StringUtils.split(params, COMMA);
+    final String[] actionParts = Arrays.stream(parts).map(String::trim).toArray(String[]::new);
 
-    Action[] actions = new Action[actionParts.length];
+    final Action[] actions = new Action[actionParts.length];
 
     for (int i = 0; i < actionParts.length; i++) {
-
-      if (actionParts[i].equals(Action.MOVE.name()) || actionParts[i].equals(Action.RIGHT.name())
-          || actionParts[i]
-          .equals(Action.LEFT.name()) || actionParts[i].equals(Action.REPORT.name())) {
-
+      if (validAction(actionParts[i])) {
         actions[i] = Action.valueOf(actionParts[i]);
-
       } else {
-        throw new ActionException("Invalid parameter ACTIONS:" + actionParts[i]);
+        throw new ActionException("Invalid parameter ACTIONS:" + parts[i]);
       }
+    }
 
+    if (!Arrays.asList(actions).contains(Action.REPORT)) {
+      throw new ActionException(
+          "Please add REPORT in your Parameter ACTIONS: " + params + " ,in order to get output");
     }
 
     return actions;
+  }
+
+  private static boolean validAction(final String param) {
+    for (Action action : Action.values()) {
+      if (action.name().equals(param.toUpperCase())) {
+        return true;
+      }
+    }
+    return false;
   }
 
   /**
@@ -55,20 +58,30 @@ public class ParseService {
    * @return RobotPlace
    */
 
-  public static RobotPlace parseRobotPlace(String params) throws PlaceException {
-    String splitPlace = params;
-    splitPlace = StringUtils.upperCase(splitPlace);
-    String[] parts = StringUtils.split(splitPlace, ",");
+  public static RobotPlace parseRobotPlace(final String params) throws PlaceException {
+    final String[] parts = StringUtils.split(params, COMMA);
+    final String[] placeParts = Arrays.stream(parts).map(String::trim).toArray(String[]::new);
 
-    if ((parts.length == 3) && (parts[2].equals(Direction.EAST.name()) || parts[2]
-        .equals(Direction.NORTH.name()) ||
-        parts[2].equals(Direction.SOUTH.name()) || parts[2].equals(Direction.WEST.name()))) {
-      final int x = Integer.valueOf(parts[0]);
-      final int y = Integer.valueOf(parts[1]);
-      final Direction direction = Direction.valueOf(parts[2]);
-      return new RobotPlace(x, y, direction);
+    if (placeParts.length == 3 && validDirection(placeParts[2])) {
+      try {
+        int x = Integer.valueOf(placeParts[0]);
+        int y = Integer.valueOf(placeParts[1]);
+        Direction direction = Direction.valueOf(placeParts[2]);
+        return new RobotPlace(x, y, direction);
+      } catch (NumberFormatException e){
+        throw new PlaceException("Invalid Position for RobotPlace: " + parts[0] + " " + parts[1]);
+      }
     } else {
-      throw new PlaceException("Invalid Parameter PLACE: " + parts[0] + " " + parts[1] + " " + parts[2]);
+      throw new PlaceException("Invalid Parameter for a RobotPlace: " + parts[0] + " " + parts[1] + " " + parts[2]);
     }
+  }
+
+  private static boolean validDirection(final String param) {
+    for (Direction direction : Direction.values()) {
+      if (direction.name().equals(param.toUpperCase())) {
+        return true;
+      }
+    }
+    return false;
   }
 }

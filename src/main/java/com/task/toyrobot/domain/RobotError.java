@@ -1,20 +1,20 @@
 package com.task.toyrobot.domain;
 
 /**
- * Defines a custom Error Message
+ * Defines a custom RobotError Message
  */
 
-public class Error {
-
+public class RobotError {
   private int statusCode;
   private String message;
+
   /**
-   * Default constructor of a Error
+   * Default constructor of a RobotError
    *
    * @param statusCode HTTP Ststuscode of error
    * @param message error message
    */
-  public Error(int statusCode, String message) {
+  public RobotError(int statusCode, String message) {
     this.statusCode = statusCode;
     this.message = message;
 
@@ -30,7 +30,7 @@ public class Error {
   }
 
   /**
-   * Get Error Message
+   * Get RobotError Message
    *
    * @return the String value of error messsage
    */

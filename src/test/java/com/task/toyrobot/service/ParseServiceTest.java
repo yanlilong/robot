@@ -6,11 +6,13 @@ import org.junit.Test;
 import com.task.toyrobot.domain.Direction;
 import com.task.toyrobot.domain.RobotPlace;
 import com.task.toyrobot.domain.Action;
-import com.task.toyrobot.Exception.PlaceException;
-import com.task.toyrobot.Exception.ActionException;
+import com.task.toyrobot.exception.PlaceException;
+import com.task.toyrobot.exception.ActionException;
 
+/**
+ * Test {@link ParseService}
+ */
 public class ParseServiceTest {
-
   @Test
   public void parseActions() throws Exception {
     Action[] actionDirec = {Action.MOVE, Action.RIGHT,Action.REPORT};
@@ -35,12 +37,15 @@ public class ParseServiceTest {
   @Test(expected = PlaceException.class)
   public void testPlaceException() throws PlaceException {
      ParseService.parseRobotPlace("5,5,TEST");
+  }
 
+  @Test(expected = PlaceException.class)
+  public void testPlaceInvalidPosition() throws PlaceException {
+    ParseService.parseRobotPlace("S,T,TEST");
   }
 
   @Test(expected = ActionException.class)
   public void testActionException() throws ActionException {
     ParseService.parseActions("MOVE");
   }
-
 }

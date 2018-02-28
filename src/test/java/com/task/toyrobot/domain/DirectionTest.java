@@ -4,6 +4,9 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+/**
+ * Test {@link Direction}
+ */
 public class DirectionTest {
 
   @Test
