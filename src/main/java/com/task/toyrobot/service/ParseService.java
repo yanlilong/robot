@@ -10,7 +10,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
 /**
- * Class that can parse Place String to Place Object and Commands String to array of Action Object.
+ * Class that can parse a place String to {@link RobotPlace}
+ * and a command String to an array of {@link Action} Object.
  */
 
 public class ParseService {
@@ -19,7 +20,7 @@ public class ParseService {
   /**
    * parse actions {@link Action[]} from the given {@link String}.
    *
-   * @return Actions[]
+   * @return an array of {@link Action}
    */
   public static Action[] parseActions(final String params) throws ActionException {
     final String[] parts = StringUtils.split(params, COMMA);
@@ -55,7 +56,7 @@ public class ParseService {
   /**
    * parse place {@link RobotPlace} from the given {@link String}.
    *
-   * @return RobotPlace
+   * @return a {@link RobotPlace}
    */
 
   public static RobotPlace parseRobotPlace(final String params) throws PlaceException {
