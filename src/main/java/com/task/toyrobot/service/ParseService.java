@@ -1,8 +1,8 @@
 package com.task.toyrobot.service;
 
-import com.task.toyrobot.Domain.Action;
-import com.task.toyrobot.Domain.Direction;
-import com.task.toyrobot.Domain.RobotPlace;
+import com.task.toyrobot.domain.Action;
+import com.task.toyrobot.domain.Direction;
+import com.task.toyrobot.domain.RobotPlace;
 import com.task.toyrobot.Exception.PlaceException;
 import com.task.toyrobot.Exception.ActionException;
 import org.apache.commons.lang3.StringUtils;

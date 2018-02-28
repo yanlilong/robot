@@ -1,29 +1,30 @@
 package com.task.toyrobot.service;
 
-import com.task.toyrobot.Domain.RobotPlace;
-import com.task.toyrobot.Domain.Action;
+import com.task.toyrobot.domain.RobotPlace;
+import com.task.toyrobot.domain.Action;
 import org.apache.log4j.Logger;
 
 /**
- * Class that represents a robot can move several Actions and report new Place.
+ * The main entry for Robot Toy to do actions.
  */
 public class Robot {
 
   private static final Logger logger = Logger.getLogger(Robot.class);
-  public final static RobotPlace INVALID_STATE = null;
-
   // transition table in deterministic finite automaton (DFA)
-  private final static int[][] transition;
-
+  private  final static int[][] transition;
   static {
     transition = StateService.buildTransitionTable();
   }
 
   /**
    * Asks the robot to do the actions {@link Action} from the given {@link RobotPlace}.
+   *
+   * @param robotPlace
+   * @param actions
+   * @return the new {@link RobotPlace}
    */
-  public static RobotPlace run(RobotPlace robotPlace, Action... actions) {
-    // Only accept the
+  public static RobotPlace run(RobotPlace robotPlace, Action ... actions) {
+    // Only accept the valid RobotPlace
     final int currentState = StateService.getState(robotPlace);
     int newState, lastState;
 
@@ -31,21 +32,16 @@ public class Robot {
     lastState = newState;
     for (Action action : actions) {
       if (action == Action.REPORT) {
-        // terminate the loop with the FIRST run action
-        break;
+        // terminate the loop with the FIRST report and return the lastState
+        return StateService.getRobotPlace(lastState);
       }
 
-      if (lastState >= 0 && lastState < transition.length
-          && lastState != StateService.INVALID_STATE) {
-        // only accept the valid action, the valid action means the
-        newState = transition[lastState][action.getValue()];
+      // only accept the valid action
+      newState = transition[lastState][action.getValue()];
+      if (newState != StateService.INVALID_STATE) {
         lastState = newState;
       }
     }
-    if (newState == -1) {
-      return INVALID_STATE;
-    } else {
-      return StateService.getRobotPlace(newState);
-    }
+    return StateService.getRobotPlace(lastState);
   }
 }

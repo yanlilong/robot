@@ -4,9 +4,9 @@ import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
-import com.task.toyrobot.Domain.RobotPlace;
-import com.task.toyrobot.Domain.Action;
-import com.task.toyrobot.Domain.Direction;
+import com.task.toyrobot.domain.RobotPlace;
+import com.task.toyrobot.domain.Action;
+import com.task.toyrobot.domain.Direction;
 
 public class RobotTest {
 
@@ -27,5 +27,4 @@ public class RobotTest {
     expected = new RobotPlace(3, 3, Direction.NORTH);
     assertTrue(state.equals(expected));
   }
-
 }

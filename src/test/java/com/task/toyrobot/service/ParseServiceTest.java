@@ -1,13 +1,13 @@
-package com.idealo.toyrobot.service;
+package com.task.toyrobot.service;
 
 import static org.junit.Assert.*;
 import org.junit.Test;
 
-import com.idealo.toyrobot.Domain.Direction;
-import com.idealo.toyrobot.Domain.RobotPlace;
-import com.idealo.toyrobot.Domain.Action;
-import com.idealo.toyrobot.Exception.PlaceException;
-import com.idealo.toyrobot.Exception.ActionException;
+import com.task.toyrobot.domain.Direction;
+import com.task.toyrobot.domain.RobotPlace;
+import com.task.toyrobot.domain.Action;
+import com.task.toyrobot.Exception.PlaceException;
+import com.task.toyrobot.Exception.ActionException;
 
 public class ParseServiceTest {
 
