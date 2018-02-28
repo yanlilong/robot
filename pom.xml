@@ -77,7 +77,7 @@
       <artifactId>guava</artifactId>
       <version>23.0</version>
     </dependency>
-  </dependencies>
+
 
     <!-- Testing -->
     <dependency>
@@ -92,6 +92,7 @@
       <version>1.10.19</version>
       <scope>test</scope>
     </dependency>
+  </dependencies>
 
   <repositories>
     <repository>
