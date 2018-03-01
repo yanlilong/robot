@@ -31,15 +31,20 @@ Part 4: Case studies and Error message
 
 4.1 url robotError: 404 Error, including missing parameters
 http://localhost:8080/api/v1/toy
-http://localhost:8080/api/v1/toy-robot?place=1,2,EAST
+output:404 Error,Request resource not Found
 
-4.2 invalid input: Missing Robot ERROR
+4.2 valid input:
+http://localhost:8080/api/v1/toy-robot?PLACE=1,2,NORTH&ACTIONS=MOVE,REPORT
+output:{"x":1,"y":3,"direction":"NORTH"}
+
+4.3 invalid input: Missing Robot ERROR
 http://localhost:8080/api/v1/toy-robot?PLACE=1,6,EAST&ACTIONS=MOVE,MOVE,LEFT,MOVE,REPORT
+output:invalid place: 1,6,EAST
 
-4.3 invalid input: Missing REPORT ERROR
+4.4 invalid input: Missing REPORT ERROR
 http://localhost:8080/api/v1/toy-robot?PLACE=0,0,NORTH&ACTIONS=MOVE
 Error output:Please add REPORT in your Parameter ACTIONS:MOVE,in order to get output
 
-4.4 invalid actions skipped
+4.5 invalid actions skipped
 For example: http://localhost:8080/api/v1/toy-robot?PLACE=4,4,NORTH&ACTIONS=MOVE,REPORT
 The action MOVE will be ignored, and the output is 4,4,NORTH
